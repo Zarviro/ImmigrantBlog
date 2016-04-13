@@ -22,12 +22,12 @@ namespace ImmigrantBlog.WEB.Controllers
     public class AccountController : Controller
     {
         private IUserService userService;
-        //
+        // 1
         public AccountController(IUserService userService)
         {
             this.userService = userService;
         }
-
+        //
         private IAuthenticationManager AuthenticationManager
         {
             get
