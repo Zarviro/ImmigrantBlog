@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ImmigrantBlog.WEB.Models.PostModel>
+
+@foreach (var link in Model)
+{
+    @Html.RouteLink(
+    link.Title, new
+    {
+        controller = "Post",
+        action = "Show",
+        id = link.Id
+    }, new
+    {
+        @class = "btn  btn-block btn-default btn-sm"
+    }
+    )
+}

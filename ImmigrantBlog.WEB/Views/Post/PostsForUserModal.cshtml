@@ -1,0 +1,54 @@
+﻿@using ImmigrantBlog.WEB.ModelViews
+@model PostListModelView
+
+<div id="userPosts">
+    <div class="collapse">Колличество: <span class="posts-count">@Model.PagingInfo.TotalItems</span></div>
+    <ul>
+        @foreach (var post in Model.Posts)
+        {
+            <li>@Html.ActionLink(post.Title, "Show", "Post", new { post.Id }, htmlAttributes: new { @class = post.IsPublished ? "btn btn-default" : "btn btn-default post-notpublished", target = "_blank" })</li>
+        }
+    </ul>
+
+    <div>
+        @Html.PrevPage(Model.PagingInfo, x => Url.Action("PostsForUserModal", new { page = x, id = Model.CurrentSearch }))
+        @Html.NextPage(Model.PagingInfo, x => Url.Action("PostsForUserModal", new { page = x, id = Model.CurrentSearch }))
+    </div>
+    <div>
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("PostsForUserModal", new { page = x, id = Model.CurrentSearch }))
+    </div>
+</div>
+
+
+<style>
+    .post-notpublished {
+        background-color: AppWorkspace;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var accordion = $("#userPosts").parent().parent();
+        accordion.find("h3>span.posts-count").text("Посты: " + $("#userPosts .posts-count").text());
+
+        $("#userPosts .pagination").on("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr("href"),
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                success: function (result) {
+                    accordion.find("div.user-posts").html(result);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        });
+
+    });
+
+</script>

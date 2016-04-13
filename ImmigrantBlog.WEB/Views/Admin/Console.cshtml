@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Console";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Console</h2>
+
+<div id="tabContainer">
+    <ul>
+        <li>@Html.ActionLink("Посты", "PostList")</li>
+        <li>@Html.ActionLink("Коментарии", "CommentList")</li>
+        @if (User.IsInRole(ImmigrantBlog.WEB.Util.Role.Admin))
+        {
+            <li>@Html.ActionLink("Категории", "CategoryList")</li>
+            <li>@Html.ActionLink("Тэги", "TagList")</li>
+            <li>@Html.ActionLink("Статистика", "StatisticsList")</li>
+            <li>@Html.ActionLink("Пользователи", "UserList")</li>
+            <li>@Html.ActionLink("Настройки", "Setings")</li>
+        }
+    </ul>
+</div>
+
+
+
+
+
+
+
+<style>
+    .ui-tabs.ui-tabs-vertical {
+        padding: 0;
+        width: 100%;
+    }
+    #tabContainer>.ui-widget-header {
+        border: none;
+        background: #525252;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+        float: left;
+        width: 10%;
+        margin: 0px;
+        background: #CCC;
+        border-radius: 4px 0 0 4px;
+        border-right: 1px solid gray;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+        clear: left;
+        width: 100%;
+        margin: 0px;
+        border: 1px solid gray;
+        border-width: 1px 0 1px 1px;
+        border-radius: 4px 0 0 4px;
+        overflow: hidden;
+        position: relative;
+        right: -2px;
+        z-index: 2;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+        display: block;
+        width: 100%;
+        padding: 0.6em 1em;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+        cursor: pointer;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+        margin-bottom: 0.2em;
+        padding-bottom: 0;
+        border-right: 1px solid white;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+        /*margin-bottom: 10px;*/
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+        float: left;
+        width: 90%;
+        border-left: 1px solid gray;
+        border-radius: 0;
+        position: relative;
+        left: -1px;
+    }
+    .ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active{
+        margin: 0px;
+    }
+</style>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery-ui-combobox.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Jquery UI
+            //*******************************************
+
+            // tab
+            $("#tabContainer").tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+
+
+
+
+
+
+
+        });
+    </script>
+}
+

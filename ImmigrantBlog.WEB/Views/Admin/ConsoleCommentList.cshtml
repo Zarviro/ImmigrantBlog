@@ -1,0 +1,609 @@
+﻿<div>
+    <button type="button" class="btn btn-default btn-sm" onclick="ShowAllComments()"><span>Все</span></button>
+    <button type="button" class="btn btn-default btn-sm" onclick="ShowPublishedComments()"><span>Опубликованные</span></button>
+    <button type="button" class="btn btn-default btn-sm" onclick="ShowNotPublishedComments()"><span>Не опубликованные</span></button>
+
+
+    <label for="commentSearchText">Поиск в:&nbsp;</label>
+    <select id="commentColSearch">
+        <option value="Description" selected>содержимом</option>
+        <option value="PostTitle">посте</option>
+        <option value="User.Login">пользователе</option>
+    </select>
+    <input id="commentSearchText" type="text">
+    <button id="commentResetSearch" type="button" class="btn btn-default"><span class="ui-icon ui-icon-close"></span></button>
+    <button id="commentSearch" type="button" class="btn btn-default"><span class="ui-icon ui-icon-search"></span></button>
+</div>
+
+<div id="jpagerComments"></div>
+<table id="jqgComments"></table>
+
+<div id="comment_dlg_toolbar" class="hidden">
+    <table cellpadding="0" cellspacing="0" style="width:100%">
+        <tr>
+            <td>
+                <button type="button" class="btn btn-default btn-sm" onclick="ReplyToComment()"><span class="ui-icon ui-icon-comment"></span></button>
+                <button type="button" class="btn btn-default btn-sm" onclick="EditComment()"><span class="ui-icon ui-icon-pencil"></span></button>
+                <button type="button" class="btn btn-default btn-sm" onclick="DeleteCurrentComment()"><span class="ui-icon ui-icon-trash"></span></button>
+                <button type="button" class="btn btn-default btn-sm" onclick="PublishedComment()"><span class="comment-ispublished ui-icon"></span></button>
+            </td>
+            <td style="text-align:right">
+                <button type="button" class="btn btn-default btn-sm" onclick="PrevComment()"><span class="ui-icon ui-icon-triangle-1-w"></span></button>
+                <button type="button" class="btn btn-default btn-sm" onclick="NextComment()"><span class="ui-icon ui-icon-triangle-1-e"></span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+
+<style>
+    /*pager*/
+    .ui-jqgrid .ui-pg-input {
+        height: 20px;
+    }
+
+    .ui-jqgrid .ui-jqgrid-pager {
+        height: 26px;
+    }
+
+    /*only horizontal lines*/
+    #jqgComments .ui-jqgrid tr.ui-row-ltr td {
+        border-bottom-style: none;
+        border-right-style: none;
+    }
+
+    #jqgComments td {
+        border-bottom-style: none;
+        border-right-style: none;
+    }
+
+    #jqgComments .ui-widget-content {
+        border: solid #b5b5b5;
+        border-width: 1px 0;
+    }
+
+    /*remove table border*/
+    #gbox_jqgComments {
+        border: none;
+    }
+
+    /*highlight selected row*/
+    #jqgComments .ui-state-highlight, #jqgComments .ui-widget-content .ui-state-highlight, #jqgComments .ui-widget-header .ui-state-highlight {
+        border: solid #808080;
+        border-width: 1px 0;
+        background: none;
+        color: black;
+    }
+    /*enable hightlight icons*/
+    .ui-jqgrid .ui-state-highlight .ui-icon {
+        background-image: url(../../Content/themes/base/images/ui-icons_222222_256x240.png);
+    }
+    /*height row*/
+    #jqgComments .row-height {
+        white-space: nowrap;
+        height: 30px
+    }
+
+
+    /*modal*/
+    .lock {
+        /* Скрываем скроллбары */
+        overflow: hidden;
+    }
+
+    .modal {
+        /* По умолчанию не показываем содержимое модальных окон */
+        display: none;
+    }
+
+    .lock .modal {
+        /* Показываем подложку (полупрозрачное затенение) при открытии модального окна */
+        display: block;
+        /* Саму подложку фиксируем и растягиваем на всё пространство */
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: 0;
+        right: 0;
+        /* Если содержимое модального окна в подложку не влезает — показываем скроллбары */
+        overflow: auto;
+    }
+
+    /*скрываем titlebar в диалоговом окне*/
+    .noTitleBar .ui-dialog-titlebar {
+        display: none;
+    }
+
+    /*скрываем button close в titlebar в диалоговом окне*/
+    .noCloseBtnTitle .ui-dialog-titlebar .ui-dialog-titlebar-close {
+        display: none;
+    }
+
+    .noCloseBtnTitle .ui-dialog-title {
+        width: 100%;
+    }
+
+    .ui-dialog .ui-dialog-buttonpane {
+        width: 100%;
+    }
+
+    /*modal reply to comment*/
+    .reply-comment {
+        background-color: red;
+        z-index: 200;
+    }
+    /*modal comment info*/
+    .comment-info {
+        z-index: 110 !important;
+    }
+</style>
+
+
+
+
+
+
+<script src="~/Scripts/jquery.jqGrid.min.js"></script>
+<script src="~/Scripts/i18n/grid.locale-ru.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    // Variable
+    //*******************************************
+    var API_URL = "/api/ApiComment/";
+    var commentIsPublished = "null";
+
+
+    $(document).ready(function () {
+
+        // Jquery UI
+        //*******************************************
+
+        // combobox
+        $("#commentColSearch").selectmenu();
+
+        // grid
+        $("#jqgComments").jqGrid({
+            hoverrows: false,
+            toppager: true,
+            viewrecords: true,
+            height: "auto",
+            autowidth: true,
+            hidegrid: false,
+            url: API_URL + "ispublished/" + commentIsPublished,
+            mtype: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            serializeGridData: function (postData) { return JSON.stringify(postData); },
+            colNames: ["Description", "PostTitle", "User.Login", "IsPublished", "PostedOn", "Buttons", "Id"],
+            colModel: [
+                { name: "Description", index: "Description", editable: true, edittype: "text", width: 150, sortable: true, classes: "row-height" },
+                { name: "PostTitle", index: "PostTitle", editable: true, edittype: "text", width: 150, sortable: true, search: false },
+                { name: "User.Login", index: "User.Login", editable: true, edittype: "text", width: 150, sortable: true, search: true },
+                { name: "IsPublished", index: "IsPublished", editable: true, edittype: 'select', formatter: 'select', editoptions: { value: "true:;false:x" }, width: 30, sortable: true, search: false },
+                { name: "PostedOn", index: "PostedOn", width: 150, sortable: true, search: false, formatter: 'date', formatoptions: { srcformat: 'Y/m/d H:i:s', newformat: 'd.m.Y H:i' } },
+                {
+                    name: "Id", index: "Id", width: 100, sortable: false, search: false, formatter: function (cellvalue, options, rowObject) {
+                        return "<a href='/Comment/ShowModal/" + cellvalue + "' class='viewComment btn btn-default btn-sml' data-comment-id='" + cellvalue + "'><span class='ui-icon ui-icon-document'></span></a>";
+                    }
+                },
+                { name: "Id", index: "Id", width: 30, sorttype: "number", search: false, hidden: true }
+            ],
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            pager: "#jpagerComments",
+            loadonce: true,
+            sortname: "PostedOn",
+            sortorder: "desc",
+            loadComplete: function () {  // sort after first load
+                var $self = $(this);
+                if ($self.jqGrid("getGridParam", "datatype") === "json") {
+                    setTimeout(function () {
+                        $self.trigger("reloadGrid");
+                    }, 50);
+                };
+            }
+        });
+
+        $("#jqgComments").jqGrid('navGrid', '#jpagerComments', {
+            cloneToTop: true,
+            search: false,
+            refresh: false,
+            add: false,
+            del: false,
+            edit: false,
+            view: false
+        });
+
+
+        // remove bottom pager
+        $("div#jpagerComments")[0].remove();
+
+
+
+        //Search toolbar
+        // add search toolbar
+        //$("#t_jqgComments").append($("<div><label for=\"commentSearchText\">Global search in grid for:&nbsp;" +
+        //        "</label><input id=\"commentSearchText\" type=\"text\"></input>&nbsp;" +
+        //        "<button id=\"commentSearch\" type=\"button\">Search</button></div>"));
+
+        $("#commentSearchText").keypress(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            if (key === $.ui.keyCode.ENTER) { // 13
+                $("#commentSearch").click();
+            }
+        });
+        $("#commentSearch").click(function () {
+            var rules = [], i, cm, postData = $("#jqgComments").jqGrid("getGridParam", "postData"),
+                colModel = $("#jqgComments").jqGrid("getGridParam", "colModel"),
+            searchText = $("#commentSearchText").val(),
+            l = colModel.length;
+            commentColSearch = $("#commentColSearch option:selected").val();
+            rules.push({
+                field: commentColSearch,
+                op: "cn",
+                data: searchText
+            });
+            postData.filters = JSON.stringify({
+                groupOp: "OR",
+                rules: rules
+            });
+            $("#jqgComments").jqGrid("setGridParam", { search: true });
+            $("#jqgComments").trigger("reloadGrid", [{ page: 1, current: true }]);
+            return false;
+        });
+
+
+        // reset search
+        $("#commentResetSearch").click(function () {
+            $("#jqgComments").jqGrid('setGridParam', { search: false, postData: { "filters": "" } }).trigger("reloadGrid");
+            $("#commentSearchText").val("");
+        });
+
+
+
+
+
+
+
+
+        // Modal dialog
+        //*******************************************
+
+        $.ajaxSetup({ cache: false });
+
+        // view comment
+        $("#jqgComments").on("click", ".viewComment", function (e) {
+            e.preventDefault();
+            $("<div id='dialogContent'></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .load(this.href, function () {
+                    ChangeCommentIsPublishedIcon();
+                })
+                .dialog({
+                    create: function (event, ui) {
+                        $(".ui-dialog-title").html($("#comment_dlg_toolbar").html());
+                    },
+                    dialogClass: 'noCloseBtnTitle comment-info',
+                    resizable: false,
+                    draggable: false,
+                    modal: true,
+                    close: function () { $(this).remove() },
+                    position: { my: "center", at: "center top+110" },
+                    width: 1000,
+                    buttons: {
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+        });
+
+        // close
+        $(".close").on("click", function (e) {
+            e.preventDefault();
+            $(this).closest(".dialog").dialog("close");
+        });
+
+
+    });
+    // End JQuery
+    //********************************************
+
+
+    // Functions
+    //*******************************************
+
+    // refresh jqGrid
+    function RefreshGrid() {
+        $.ajax({
+            url: API_URL + "ispublished/" + commentIsPublished,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                $("#jqgComments").jqGrid("clearGridData")
+                .jqGrid("setGridParam", { data: data, search: true })
+                .trigger("reloadGrid", [{ page: 1, current: true }]);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+    // delete comment
+    function DeleteComment(id) {
+        $.ajax({
+            url: API_URL + id,
+            type: "DELETE",
+            contentType: "application/json;charset=utf-8",
+            success: function () {
+                RefreshGrid();
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+    // prev comment
+    function PrevComment()
+    {
+        var allRows = $('#jqgComments').jqGrid('getRowData');
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        $.each(allRows, function (key, value) {
+            if (currentId === value.Id) {
+                if (key > 0) {
+                    currentId = allRows[key - 1].Id;
+                }
+                else {
+                    currentId = allRows[allRows.length - 1].Id;
+                    return false;
+                }
+            }
+        });
+        $.ajax({
+            url: "/Comment/ShowModal/" + currentId,
+            type: "GET",
+            success: function (result) {
+                $("#dialogContent").html(result);
+                ChangeCommentIsPublishedIcon();
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+    // next comment
+    function NextComment() {
+        var allRows = $('#jqgComments').jqGrid('getRowData');
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        $.each(allRows, function (key, value) {
+            if (currentId === value.Id) {
+                if (key < (allRows.length - 1)) {
+                    currentId = allRows[key + 1].Id;
+                    return false;
+                }
+                else {
+                    currentId = allRows[0].Id;
+                }
+            }
+        });
+        $.ajax({
+            url: "/Comment/ShowModal/" + currentId,
+            type: "GET",
+            success: function (result) {
+                $("#dialogContent").html(result);
+                ChangeCommentIsPublishedIcon();
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+    // reply to comment
+    function ReplyToComment() {
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        $("<div id='replyDialogContent'></div>")
+            .addClass("dialog")
+            .appendTo("body")
+            .load("/Comment/ReplyModal/" + currentId)
+            .dialog({
+                dialogClass: 'reply-comment noTitleBar',
+                resizable: false,
+                draggable: false,
+                modal: false,
+                close: function () { $(this).remove() },
+                position: { my: "center", at: "center top+250" },
+                width: 400,
+                buttons: {
+                    "Ответить": function () {
+                        SendReply();
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+    };
+
+    // send reply
+    function SendReply() {
+        $.ajax({
+            url: "@Url.Action("CreateModal", "Comment")",
+            type: "POST",
+            data: $('form').serialize(),
+            datatype: "json",
+            success: function (result) {
+                $("#dialogContent").html(result);
+                if($("#dialogContent").text() === "") {
+                    $("#dialogContent").dialog("close");
+                    RefreshGrid();
+                }
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+    // edit comment
+    function EditComment() {
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        $("<div id='editDialogContent'></div>")
+            .addClass("dialog")
+            .appendTo("body")
+            .load("/Comment/EditModal/" + currentId)
+            .dialog({
+                dialogClass: 'reply-comment noTitleBar',
+                resizable: false,
+                draggable: false,
+                modal: false,
+                close: function () { $(this).remove() },
+                position: { my: "center", at: "center top+250" },
+                width: 400,
+                buttons: {
+                    "Сохранить": function () {
+                        SaveEditComment();
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+    };
+
+    // save edit comment
+    function SaveEditComment() {
+        $.ajax({
+            url: "@Url.Action("EditModal", "Comment")",
+            type: "POST",
+            data: $('form').serialize(),
+            datatype: "json",
+            success: function (result) {
+                $("#dialogContent").html(result);
+                if($("#dialogContent").text() === "") {
+                    $("#dialogContent").dialog("close");
+                    RefreshGrid();
+                }
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+    // delete comment
+    function DeleteCurrentComment() {
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        $("<div id='deleteDialogContent'></div>")
+            .addClass("dialog")
+            .appendTo("body")
+            .html("<p>Удалить комментарий?</p>")
+            .dialog({
+                dialogClass: '',
+                resizable: false,
+                draggable: false,
+                modal: false,
+                close: function () { $(this).remove() },
+                position: { my: "center", at: "center" },
+                width: 300,
+                buttons: {
+                    "Удалить": function () {
+                        $.ajax({
+                            url: API_URL + currentId,
+                            type: "DELETE",
+                            contentType: "application/json;charset=utf-8",
+                            success: function () {
+                                $("#deleteDialogContent").remove();
+                                RefreshGrid();
+                                NextComment();
+                            },
+                            error: function (x, y, z) {
+                                alert(x + '\n' + y + '\n' + z);
+                            }
+                        });
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+    };
+
+    // published comment
+    function PublishedComment() {
+        var currentId = $("#dialogContent .comment-info .comment-id").text();
+        var isPublished = $(".ui-dialog-titlebar .comment-ispublished").is(".ui-icon-locked") ? true : false;
+        $.ajax({
+            url: API_URL + "SetPublished/" + currentId,
+            type: "PUT",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(isPublished),
+            success: function () {
+                $(".ui-dialog-titlebar .comment-ispublished").toggleClass(function () {
+                    if ($(this).is(".ui-icon-unlocked")) {
+                        $(this).removeClass("ui-icon-unlocked");
+                        return "ui-icon-locked";
+                    } else {
+                        $(this).removeClass("ui-icon-locked");
+                        return "ui-icon-unlocked";
+                    }
+                });
+                RefreshGrid();
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    };
+
+    // show all comments
+    function ShowAllComments() {
+        commentIsPublished = "null";
+        RefreshGrid();
+    };
+
+    // show published comments
+    function ShowPublishedComments() {
+        commentIsPublished = "true";
+        RefreshGrid();
+    };
+
+    // show not published comments
+    function ShowNotPublishedComments() {
+        commentIsPublished = "false";
+        RefreshGrid();
+    };
+
+    // change comment is published icon
+    function ChangeCommentIsPublishedIcon() {
+        if ($(".comment-info .comment-ispublished").text().toLowerCase() == "true") {
+            $(".ui-dialog-titlebar .comment-ispublished").removeClass("ui-icon-unlocked");
+            $(".ui-dialog-titlebar .comment-ispublished").removeClass("ui-icon-locked");
+            $(".ui-dialog-titlebar .comment-ispublished").addClass("ui-icon-unlocked");
+        }
+        else {
+            $(".ui-dialog-titlebar .comment-ispublished").removeClass("ui-icon-unlocked");
+            $(".ui-dialog-titlebar .comment-ispublished").removeClass("ui-icon-locked");
+            $(".ui-dialog-titlebar .comment-ispublished").addClass("ui-icon-locked");
+        };
+    }
+
+</script>
+
+
+
+
+
+

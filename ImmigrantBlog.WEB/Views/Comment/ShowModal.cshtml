@@ -1,0 +1,54 @@
+﻿@model ImmigrantBlog.WEB.ModelViews.CommentEditModelView
+
+<h5>Пост: @Html.ActionLink(Model.Comment.PostTitle, "Show", "Post", new { id = Model.Comment.PostId }, htmlAttributes: new { @class = "", target = "_blank" })</h5>
+
+<div class="content">
+    <pre>@Model.Comment.Description</pre>
+</div>
+
+<div id="accordion">
+    <h3>Информация о комментарии</h3>
+    <div class="comment-info">
+        Id: <span class="comment-id">@Model.Comment.Id</span><br />
+        <div class="collapse">IsPublished: <span class="comment-ispublished">@Model.Comment.IsPublished</span><br /></div>
+        Автор: @Model.Comment.User.Login<br />
+        Опубликован: @Model.Comment.PostedOn.ToString("dd.MM.yyyy в HH:mm")<br />
+    </div>
+
+    <h3>Цепочка ответов: @Model.Responses.Count(c => c.IsPublished == true)</h3>
+    <div class="comment-replies">
+        <ul>
+            @{
+                int margin = 0;
+                foreach (var comment in Model.Responses)
+                {
+                    if(comment.IsPublished)
+                    {
+                        <li>
+                            <div class="well" style="margin-left: @margin.ToString()px">
+                                @comment.User.Login<br />
+                                @comment.PostedOn.ToString("dd.MM.yyyy в HH:mm")<br />
+                                <pre>@comment.Description</pre>
+                            </div>
+                        </li>
+                        margin += 30;
+                    }
+                }
+            }
+        </ul>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#accordion").accordion({
+            collapsible: true,
+            active: 'none',
+            heightStyle: "content"
+        });
+
+    });
+</script>

@@ -1,0 +1,18 @@
+﻿@model ImmigrantBlog.WEB.ModelViews.UserEditModelView
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.HiddenFor(model => model.User.Id, new { htmlAttributes = new { @class = "form-control" } })
+
+    @Html.LabelFor(m => m.User.Roles, new { @class = "control-label" }) <br />
+    foreach (var item in Model.Roles)
+    {
+        <input type="checkbox" id="@item.Value" name="selectedRoles" value="@item.Value" checked="@item.Selected"  class="checkbox-inline @(item.Value == "user" ? "hidden" : "")" />
+        <label for="@item.Value" class="@(item.Value == "user" ? "hidden" : "")">@item.Value</label><br/>
+    }
+}
+
+
+

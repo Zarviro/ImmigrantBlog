@@ -1,0 +1,5 @@
+﻿@using(Html.BeginForm("Search", "Post", FormMethod.Get, new { id = "searchForm"}))
+{
+    @Html.TextBox("search");
+    <input type="submit" value="Search" class="btn btn-default" />
+}

@@ -1,0 +1,46 @@
+﻿@model ImmigrantBlog.WEB.Models.UserModel
+
+<h3>@Model.Login</h3>
+
+<div class="content">
+    @Html.ActionLink(Model.Email, Model.Email)<br />
+    Регистрация: @Model.DateRegister.ToString("dd.MM.yyyy в HH:mm")<br />
+    Последний визит: @Model.DateLastVisit.ToString("dd.MM.yyyy в HH:mm")<br />
+    IP: @Model.LastIP<br />
+    Роли:
+    @foreach (var role in Model.Roles)
+    { @(role + " ") }<br />
+    <div class="user-info">
+        <div class="collapse">Id: <span class="user-id">@Model.Id</span></div>
+        <div class="collapse">IsBlocked: <span class="user-isblocked">@Model.IsBlocked</span></div>
+        Аватар: @Model.AvatarPath<br />
+        Имя: @Model.Name<br />
+        Фамилия: @Model.Surname<br />
+        Страна: @Model.Country<br />
+        Город: @Model.City<br />
+    </div>
+</div>
+
+<div id="accordion">
+    <h3><span class="posts-count">Посты: </span></h3>
+    <div class="user-posts">
+        @Html.Action("PostsForUserModal", "Post", new { id = Model.Id })
+    </div>
+    <h3><span class="comments-count">Комментарии: </span></h3>
+    <div class="user-comments">
+        @Html.Action("CommentsForUserModal", "Comment", new { id = Model.Id })
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#accordion").accordion({
+            collapsible: true,
+            active: 'none',
+            heightStyle: "content"
+        });
+
+    });
+</script>

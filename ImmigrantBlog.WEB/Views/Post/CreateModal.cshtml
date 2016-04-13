@@ -1,0 +1,222 @@
+﻿@using ImmigrantBlog.WEB.ModelViews
+@model PostEditModelView
+
+
+
+<span>@ViewBag.DialogTitle</span>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <ul class="modal-create" style="-moz-text-decoration-line: none text-decoration-line: none; margin: 0px; padding: 0px;">
+            <li class="post-hidden hidden">
+                @Html.HiddenFor(model => model.Post.Id)
+            </li>
+
+            <li class="post-error hidden">
+                @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+            </li>
+
+            <li class="post-description">
+                <div>
+                    @Html.LabelFor(model => model.Post.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Post.Description, new { htmlAttributes = new { @class = "form-control", id = "description" } })
+                    @Html.ValidationMessageFor(model => model.Post.Description, "", new { @class = "text-danger" })
+                </div>
+            </li>
+
+            <li class="post-shortdescription hidden">
+                <div>
+                    @Html.LabelFor(model => model.Post.ShortDescription, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Post.ShortDescription, new { htmlAttributes = new { @class = "form-control", id = "short_description" } })
+                    @Html.ValidationMessageFor(model => model.Post.ShortDescription, "", new { @class = "text-danger" })
+                </div>
+            </li>
+
+            <li class="post-metadata hidden">
+                <div>
+                    @Html.LabelFor(model => model.Post.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Post.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Post.Title, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.Post.Category, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.Post.Category.Id, @Model.Categories, htmlAttributes: new { id = "categories" })
+                    @Html.ValidationMessageFor(model => model.Post.Category, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.Post.Tags, htmlAttributes: new { @class = "control-label" })
+                    <ul class="tags" style="-moz-text-decoration-line: none text-decoration-line: none">
+                        @if (Model.Post.Tags != null && Model.Post.Tags.Count > 0)
+                        {
+                            @Html.PostTags(Model)
+                        }
+                        <li class="search-field">
+                            @Html.DropDownList("selected_tag", @Model.Tags, "Select tag...", htmlAttributes: new { id = "selected_tag" })
+                        </li>
+                    </ul>
+                    @Html.ValidationMessageFor(model => model.Post.Tags, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.Post.Meta, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Post.Meta, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Post.Meta, "", new { @class = "text-danger" })
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <button type="button" id="prevPostProperty" class="btn btn-default disabled"><span class="ui-icon ui-icon-carat-1-w"></span></button>
+    <button type="button" id="nextPostProperty" class="btn btn-default"><span class="ui-icon ui-icon-carat-1-e"></span></button>
+}
+
+
+
+<style>
+    .custom-combobox {
+        position: relative;
+        display: inline-block;
+    }
+
+    .custom-combobox-toggle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -1px;
+        padding: 0;
+        width: 15px;
+    }
+
+    .custom-combobox-input {
+        margin: 0;
+        padding: 5px 10px;
+    }
+
+
+    /*выпадающий список*/
+    .ui-widget-content {
+        width: 500px;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .overflow {
+        height: 200px;
+    }
+
+    .tags li {
+        list-style-type: none;
+        display: inline-block;
+    }
+
+    .tags {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
+    /*#description {
+        height: 100%;
+    }*/
+
+    /*.post-description>div{
+        height: 400px;
+    }*/
+
+    #short_description {
+        height: 300px;
+    }
+
+
+
+    .mce-fullscreen {
+        margin-top: 50px;
+    }
+
+    .modal-create > li{
+        list-style-type: none;
+    }
+</style>
+
+
+
+<script src="~/Scripts/jquery-ui-combobox.js"></script>
+<script src="~/Scripts/tinymce/tinymce.min.js"></script>
+
+<script src="~/Scripts/PostCreate.js"></script>
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+
+        // show summary error message
+        ShowErrorMessage();
+        SetTextareaHeight();
+
+        // prev post property
+        $("#prevPostProperty").on("click", function () {
+            if ($("#nextPostProperty").is(":enabled")) {
+                $("#nextPostProperty").removeClass("disabled");
+            };
+            var allProperties = $('.modal-create > li');
+            $.each(allProperties, function (i) {
+                if ($(this).is(':visible')) {
+                    $(this).addClass("hidden");
+                    $(".modal-create > li").eq(i - 1).removeClass("hidden");
+                    if (i === 3) {
+                        $("#prevPostProperty").addClass("disabled");
+                    };
+                    return false;
+                }
+            });
+        });
+
+        // next post property
+        $("#nextPostProperty").on("click", function () {
+            if ($("#prevPostProperty").is(":enabled")) {
+                $("#prevPostProperty").removeClass("disabled");
+            };
+            var allProperties = $('.modal-create > li');
+            $.each(allProperties, function (i) {
+                if ($(this).is(':visible')) {
+                    $(this).addClass("hidden");
+                    $(".modal-create > li").eq(i + 1).removeClass("hidden");
+                    if (i === (allProperties.length - 2)) {
+                        $("#nextPostProperty").addClass("disabled");
+                    };
+                    return false;
+                }
+            });
+        });
+
+
+
+
+        // Function
+        //****************************************************************
+
+        function ShowErrorMessage() {
+            if ($(".post-error .validation-summary-errors ul > li").length > 0) {
+                $(".post-description").prepend("<h3 class='text-danger'>Error: не все поля корректно заполнены...</h3>");
+            }
+        };
+        
+        function SetTextareaHeight() {
+            $("#description").height($(".dialog").height() - 210);
+            $("#description_ifr").height($(".dialog").height() - 210);
+        };
+
+
+    });
+
+</script>
+
+
+
+

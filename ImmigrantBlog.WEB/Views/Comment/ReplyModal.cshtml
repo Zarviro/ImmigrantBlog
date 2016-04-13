@@ -1,0 +1,15 @@
+﻿@using ImmigrantBlog.WEB.Models
+@model CommentModel
+
+
+@using (Html.BeginForm("CreateModal", "Comment", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.PostId, htmlAttributes: new { @class = "" })
+    @Html.HiddenFor(model => model.ResponsToCommentId, htmlAttributes: new { @class = "" })
+
+    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+}
+
+

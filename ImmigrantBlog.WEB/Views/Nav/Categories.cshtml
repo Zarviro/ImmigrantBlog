@@ -1,0 +1,18 @@
+﻿@model IEnumerable<ImmigrantBlog.WEB.Models.CategoryModel>
+
+@foreach(var link in Model)
+{
+    @Html.RouteLink(
+    link.Name, new
+    {
+       controller = "Post",
+       action = "List",
+       category = link.UrlSlug,
+       page = 1
+    }, new
+    {
+        @class = "btn  btn-block btn-default btn-lg"
+        + (link.UrlSlug == ViewBag.SelectedCategory ? " btn-primary" : "")
+    }
+    )
+}

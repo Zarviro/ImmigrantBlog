@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ImmigrantBlog.BLL.DTO.CategoryDTO" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAABAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>DTO\CategoryDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.DTO.CommentDTO" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAgAAkAAAAAAAAACAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>DTO\CommentDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.DTO.PostDTO" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAgAAggAEgAABAAAAAAAAAAAMAAAAAAABAAKAA=</HashCode>
+      <FileName>DTO\PostDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.DTO.TagDTO" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAABAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>DTO\TagDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.DTO.UserDTO" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACAAAAACAAAAAIAAAAAAQABkIAAgACgAAQAAAIAAA=</HashCode>
+      <FileName>DTO\UserDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Infrastructure.AutoMapperConfig" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\AutoMapperConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Infrastructure.OperationDetails" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAA=</HashCode>
+      <FileName>Infrastructure\OperationDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Infrastructure.ServiceModule" Collapsed="true">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\ServiceModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Infrastructure.ValidationException" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Infrastructure\ValidationException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Services.CategoryService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAGAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CategoryService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Services.PostService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGQAAAAAAAAAAAAAACwAAAAAIEACAgAAAAA=</HashCode>
+      <FileName>Services\PostService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Services.TagService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAGAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\TagService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAEAAAAGAAAAAEAAAAAAIAAQABAAAAEAAAAIQCAEA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.Services.CommentService" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAGAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CommentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ImmigrantBlog.BLL.DTO.BlockedIPDTO" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\BlockedIPDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ImmigrantBlog.BLL.Interfaces.IPostService" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACQAAAAAAAAAAAAAACwAAAAAIEACAgAAAAA=</HashCode>
+      <FileName>Interfaces\IPostService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ImmigrantBlog.BLL.Interfaces.IUserService" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAEAAAAAAAAAAEAAAAAAIAAQABAAAAEAAAAIQCAEA=</HashCode>
+      <FileName>Interfaces\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ImmigrantBlog.BLL.Interfaces.IService&lt;T&gt;" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAACAAAABAAAAAAAAAAAEAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ImmigrantBlog.BLL.Enums.SearchType" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Enums\SearchType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

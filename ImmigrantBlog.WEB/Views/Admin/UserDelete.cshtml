@@ -1,0 +1,72 @@
+﻿@model ImmigrantBlog.WEB.Models.UserModel
+
+@{
+    ViewBag.Title = "UserDelete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserDelete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UserViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var role in Model.Roles)
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBlocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsBlocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastIP)
+        </dd>
+
+       
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="UserDelete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "UserList")
+        </div>
+    }
+</div>

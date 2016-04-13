@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ImmigrantBlog.WEB.AutoMapperConfig" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\AutoMapperConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.BundleConfig" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\BundleConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.RouteConfig" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\RouteConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.MvcApplication" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.App_Start.NinjectWebCommon" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAQACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\NinjectWebCommon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.App_Start.Startup" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\Startup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Controllers.AccountController" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAIAAAABAAIAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Controllers.AdminController" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAAAAQAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Controllers.CommentController" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAFAACAAAAAAAAAAAMAAEACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\CommentController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Controllers.NavController" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIEAAAAAhAAAAAAAAAAEEAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\NavController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Controllers.PostController" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAQCIEACCAAAAAAAAAAQEEAEACAAAQAAgiABI=</HashCode>
+      <FileName>Controllers\PostController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.HtmlHelpers.PagingHelper" Collapsed="true">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAgAAABAA=</HashCode>
+      <FileName>HtmlHelpers\PagingHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.HtmlHelpers.PostTagsHelper" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HtmlHelpers\PostTagsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.CategoryModel" Collapsed="true">
+    <Position X="2.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAABAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\CategoryModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.CommentModel" Collapsed="true">
+    <Position X="7" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAkACAAAAAAACAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\CommentModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.PagingInfo" Collapsed="true">
+    <Position X="16.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\PagingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.PostCountHitModel" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEAAAAAAAQACAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PostCountHitModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.PostModel" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAggAEgACBAAAAAAAAIAAMAAAAAAAAAAKBA=</HashCode>
+      <FileName>Models\PostModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.TagModel" Collapsed="true">
+    <Position X="5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAABAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Models\TagModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Models.UserModel" Collapsed="true">
+    <Position X="12.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACEAAAAAAAAAAAQAAgAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Models\UserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.ModelViews.LoginModelView" Collapsed="true">
+    <Position X="12.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>ModelViews\LoginModelView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.ModelViews.PostEditModelView" Collapsed="true">
+    <Position X="0.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAEEAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelViews\PostEditModelView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.ModelViews.PostListModelView" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ModelViews\PostListModelView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.ModelViews.RegisterModelView" Collapsed="true">
+    <Position X="12.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAQAAAAAAAACAAAQAAAAIAA=</HashCode>
+      <FileName>ModelViews\RegisterModelView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImmigrantBlog.WEB.Util.NinjectDependencyResolver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAEI=</HashCode>
+      <FileName>Util\NinjectDependencyResolver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.174" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

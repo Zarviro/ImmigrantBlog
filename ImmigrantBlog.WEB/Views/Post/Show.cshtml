@@ -1,0 +1,88 @@
+﻿@model ImmigrantBlog.WEB.Models.PostModel
+
+@{
+    ViewBag.Title = @Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="posted_on">@Model.PostedOn.ToString("dd.MM.yyyy в HH:mm")</div>
+@if (Model.Modified != null)
+{
+    <div class="posted_on">Последнее редактирование: @(Convert.ToDateTime(Model.Modified).ToString("dd.MM.yyyy в HH:mm"))</div>
+}
+<h2>@Model.Title</h2>
+<ul>
+    @foreach (var tag in Model.Tags)
+    {
+        <li>@Html.ActionLink(tag.Name, "Search", "Tag", new { id = tag.Id }, null)</li>
+    }
+</ul>
+<div class="content">
+    @Html.Raw(Model.Description)
+</div>
+
+@if (Model.User.Login == User.Identity.Name || User.IsInRole("admin") || User.IsInRole("moderator"))
+{
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id })
+}
+
+<div class="comments">
+    <br />
+    <ul>
+        @foreach (var group in @Model.GroupComments)
+        {
+            int margin = 0;
+            <li>
+                <div>
+                    @foreach (var comment in group)
+                    {
+                        if (comment.IsPublished)
+                        {
+                            <div class="well" style="margin-left: @margin.ToString()px">
+                                @comment.User.Login<br />
+                                @comment.PostedOn.ToString("dd.MM.yyyy в HH:mm")<br />
+                                <pre>@comment.Description</pre>
+                            </div>
+                        }
+                        margin += 30;
+                    }
+                    @Html.ActionLink("Ответить", "Reply", "Comment", new { postId = Model.Id, responseCommentId = group.Key }, htmlAttributes: new { @class = "btn btn-default btn-response" })
+                </div>
+            </li>
+        }
+    </ul>
+
+    <div class="well" id="addComment">
+        @Html.Action("Create", "Comment", @Model.Id)
+    </div>
+    
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".btn-response").on("click", function (e) {
+                e.preventDefault();
+                $("#replyToComment").remove();
+                $(this).addClass("hidden");
+                var reply = $("<div id='replyToComment'></div>").load(this.href, function () {
+                    var formId = $(this).find("form").attr("id");
+                    $(this).find(".send-form").append("<button type='button' class='btn btn-default btn-reply-cancel' onclick='CancelReply(" + formId + ")'>Отмена</button>");
+                });
+                $(this).parent().append(reply);
+            })
+
+        });
+
+
+        function CancelReply(el) {
+            $(".btn-response").removeClass("hidden");
+            $(el).remove();
+        };
+
+    </script>
+
+}

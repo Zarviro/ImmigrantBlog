@@ -1,0 +1,71 @@
+﻿@model ImmigrantBlog.WEB.Models.PostModel
+
+<h3>@Model.Title</h3>
+
+<div class="content">
+    @Html.Raw(Model.Description)
+</div>
+
+<div id="accordion">
+    <h3>Информация о посте</h3>
+    <div class="post-info">
+        Id: <span class="post-id">@Model.Id</span><br/>
+        <div class="collapse">IsPublished: <span class="post-ispublished">@Model.IsPublished</span><br /></div>
+        Категория: @(Model.Category != null ? Model.Category.Name : "") <br />
+        Тэги:
+        <ul>
+            @foreach (var tag in Model.Tags)
+            {
+                <li>@tag.Name</li>
+            }
+        </ul><br />
+        Автор: @Model.User.Login<br />
+        Опубликован: @Model.PostedOn.ToString("dd.MM.yyyy в HH:mm")<br />
+        Последнее редактирование: @(Convert.ToDateTime(Model.Modified).ToString("dd.MM.yyyy в HH:mm"))<br />
+        Колличество просмотров: @Model.CountHits.Count<br />
+</div>
+
+    <h3>Краткое описание</h3>
+    <div class="short-descrption">
+        @Html.Raw(Model.ShortDescription)
+    </div>
+
+    <h3>Комментарии: @Model.Comments.Count(c => c.IsPublished == true)</h3>
+    <div class="post-comments">
+        <ul>
+            @foreach (var group in @Model.GroupComments)
+            {
+                int margin = 0;
+                <li>
+                    <div>
+                        @foreach (var comment in group)
+                        {
+                            if (comment.IsPublished)
+                            {
+                                <div class="well" style="margin-left: @margin.ToString()px">
+                                    @comment.User.Login<br />
+                                    @comment.PostedOn.ToString("dd.MM.yyyy в HH:mm")<br />
+                                    <pre>@comment.Description</pre>
+                                </div>
+                            }
+                            margin += 30;
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#accordion").accordion({
+            collapsible: true,
+            active: 'none',
+            heightStyle: "content"
+        });
+
+    });
+</script>

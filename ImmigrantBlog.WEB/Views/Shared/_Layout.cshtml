@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        /* max-width image */
+        img {
+            height: auto !important;
+            width: auto !important;
+            max-width: 800px !important;
+        }
+    </style>
+</head>
+
+<body>
+    @Html.Partial("_Header")
+
+    <div class="container body-content">
+        <div class="row panel">
+            <div class="col-xs-9" style="background-color: #fefefe">
+                @if(TempData["message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["message"]</div>
+                }
+                @RenderBody()
+            </div>
+            <div id="categories" class="col-xs-3" style="background-color: #e9e9e9">
+                @Html.Partial("_Search")<br />
+                @if (User.IsInRole(ImmigrantBlog.WEB.Util.Role.Admin) || User.IsInRole(ImmigrantBlog.WEB.Util.Role.Moderator))
+                {
+                    @Html.Partial("_AdminNav")<br />
+                }
+                Рубрики:<br/>
+                @Html.Action("Categories", "Nav")<br />
+                Самое читаемое:<br/>
+                @Html.Action("MostReadPosts", "Nav")<br/>
+            </div>
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/app")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

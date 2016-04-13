@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ImmigrantBlog.WEB.Models.UserModel>
+
+@*@{
+    ViewBag.Title = "UserManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+<h2>UserManager</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsBlocked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateLastVisit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastIP)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            <ul>
+                @foreach (var role in item.Roles)
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsBlocked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateLastVisit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastIP)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "UserEdit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "UserDetails", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "UserDelete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,112 @@
+﻿@model ImmigrantBlog.WEB.Models.UserModel
+
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserDetails</h2>
+
+<div>
+    <h4>UserViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var role in Model.Roles)
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBlocked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsBlocked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRegister)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRegister)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastVisit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastVisit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastIP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "UserEdit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "UserList")
+</p>

@@ -1,0 +1,54 @@
+﻿@using ImmigrantBlog.WEB.ModelViews
+@model PostListModelView
+
+@{
+    ViewBag.Title = "Immigration Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach(var post in Model.Posts)
+{
+    @Html.Partial("PostPreView", post);
+}
+
+
+@if(ViewContext.RouteData.Values["action"].ToString().Equals("List", StringComparison.OrdinalIgnoreCase))
+{
+    <div>
+        @Html.PrevPage(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentSearch }))
+        @Html.NextPage(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentSearch }))
+    </div>
+    <div>
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentSearch }))
+    </div>
+}
+
+@if(ViewContext.RouteData.Values["action"].ToString().Equals("PostsForTag", StringComparison.OrdinalIgnoreCase))
+{
+    <div>
+        @Html.PrevPage(Model.PagingInfo, x => Url.Action("PostsForTag", new { page = x, tag = Model.CurrentSearch }))
+        @Html.NextPage(Model.PagingInfo, x => Url.Action("PostsForTag", new { page = x, tag = Model.CurrentSearch }))
+    </div>
+    <div>
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("PostsForTag", new { page = x, tag = Model.CurrentSearch }))
+    </div>
+}
+
+@if (ViewContext.RouteData.Values["action"].ToString().Equals("Search", StringComparison.OrdinalIgnoreCase))
+{
+    <div>
+        @Html.PrevPage(Model.PagingInfo, x => Url.Action("Search", new { page = x, search = Model.CurrentSearch }))
+        @Html.NextPage(Model.PagingInfo, x => Url.Action("Search", new { page = x, search = Model.CurrentSearch }))
+    </div>
+    <div>
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Search", new { page = x, search = Model.CurrentSearch }))
+    </div>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        <br />
+        @Html.ActionLink("Create new post", "Create")
+    </div>
+}

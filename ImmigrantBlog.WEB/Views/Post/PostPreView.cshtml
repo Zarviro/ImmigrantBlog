@@ -1,0 +1,29 @@
+﻿@model ImmigrantBlog.WEB.Models.PostModel
+
+<div class="well">
+    <div class="posted_on">@Model.PostedOn.ToString("dd.MM.yyyy в HH:mm")</div>
+    <h3>@Html.ActionLink(Model.Title, "Show", "Post", new { id = Model.Id }, null)</h3>
+    Tags:
+    <ul class="tags">
+        @foreach (var tag in @Model.Tags)
+        {
+            <li style="list-style-type:none; display:inline-block">
+                @Html.RouteLink(
+                tag.Name, new
+                {
+                    controller = "Post",
+                    action = "PostsForTag",
+                    tag = tag.UrlSlug,
+                    page = 1
+                }, new { @class = "btn  btn-block btn-default bt-sm" })
+            </li>
+        }
+    </ul>
+    @Html.Raw(Model.ShortDescription)
+    <div class="info">
+        Views: @Model.CountHits.Select(c => c.Count).Sum() |
+        Author: @Model.User.Login |
+        Comments: @Model.Comments.Where(c => c.IsPublished == true).Count()
+    </div>
+</div>
+
